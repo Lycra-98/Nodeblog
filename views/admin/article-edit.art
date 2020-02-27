@@ -1,0 +1,88 @@
+{{extend './common/layout.art'}}
+    {{block 'main'}}
+    {{include './common/header.art'}}
+    <!-- 主体内容 -->
+    <div class="content">
+        {{include './common/aside.art'}}
+        <div class="main">
+            <!-- 分类标题 -->
+            <div class="title">
+                <h4 style="display: {{article ? 'block' : 'none'}};">文章id:{{@article && article._id}}</h4>
+            </div>
+            <!-- /分类标题 -->
+            <!-- enctype指定表单请求数据的类型,因为涉及到文件上传,需要将表单数据以二进制的形式提交multipart/form-data-->
+            <form class="form-container" action="{{link}}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>标题</label>
+                    <input type="text" name="title" class="form-control" placeholder="请输入文章标题" value="{{article && article.title}}">
+                </div>
+                <div class="form-group">
+                    <label>作者</label>
+                    <input type="text" name="author" class="form-control" readonly value="{{@userInfo._id}}">
+                </div>
+                <div class="form-group">
+                    <label>发布时间</label>
+                    <input type="date" name="publishDate" class="form-control" value="{{article && format(article.publishDate, 'yyyy-mm-dd')}}">
+                </div>
+                
+                <div class="form-group">
+                   <label for="exampleInputFile">文章封面</label>
+                   <!-- multiple能够选取多个文件 -->
+                   <input type="file" name="cover" id="file">
+                   <div class="thumbnail-waper">
+                       <img class="img-thumbnail" src="{{article && article.cover}}" id="preview">
+                   </div>
+                </div>
+                <div class="form-group">
+                    <label>内容</label>
+                    <textarea class="form-control" name="content" id="editor">
+                        {{article && article.content}}
+                    </textarea>
+                </div>
+                <div class="buttons">
+                    <input type="submit" class="btn btn-primary" value="{{button}}">
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    <!-- /主体内容 -->
+    {{/block}}
+    {{block 'script'}}
+    <script src="/admin/lib/ckeditor5/ckeditor.js"></script>
+    <script type="text/javascript">
+    
+        let editor;
+
+        ClassicEditor
+                .create( document.querySelector('#editor'))
+                .then(newEditor => {
+                    editor = newEditor;
+                })
+                .catch( error => {
+                    console.error( error );
+                });
+
+        // 获取数据
+        // const editorData = editor.getData();
+
+        //获取元素
+        let file = document.querySelector('#file');
+        let preview = document.querySelector('#preview');
+        //监听表单change事件知道文件选取成功后
+        file.onchange = function() {
+            //创建文件读取对象
+            let reader = new FileReader();
+            //this.files表示选取的文件列表因为可以选取多个文件,这里只要求选取一张图片文件即可
+            // console.log(this.files);
+            //读取文件readAsDataURL()是一个异步方法,需要使用回调才能拿到结果
+            reader.readAsDataURL(this.files[0]);
+            //监听文件读取对象的onload事件,来获取文件读取的结果,reader.result结果会是图片编码
+            reader.onload = function() {
+                //将图片显示在页面中
+                preview.src = reader.result;
+            }
+        }
+    </script>
+    {{/block}}
+    

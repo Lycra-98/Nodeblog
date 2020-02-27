@@ -1,0 +1,21 @@
+{{extend './common/layout.art'}}
+    {{block 'main'}}
+        <div class="alert alert-success" role="alert" style="font-size: 24px;text-align: center;">
+            {{msg}}
+            <a href="/admin/login" class="alert-link">秒后跳回登陆页面</a>
+        </div>
+    {{/block}}
+    {{block 'script'}}
+        <script>
+            let num = 5;
+            fn();
+            function fn() {
+                $('.alert-link').html(num + '秒后跳回登陆页面');
+                num--;
+                if (num == 0) {
+                    location.href = '/admin/login';
+                }
+            }
+            setInterval(fn,1000);
+        </script>
+    {{/block}}
