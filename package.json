@@ -1,0 +1,27 @@
+{
+  "name": "nodeblog",
+  "version": "1.0.0",
+  "description": "多人博客管理页面，分为博客前台内容即博客文章列表的展示和文章详细，博客后台内容即博客管理页面,登陆页面，用户管理和文章管理",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "bcrypt": "^3.0.8",
+    "body-parser": "^1.19.0",
+    "config": "^3.2.6",
+    "dateformat": "^3.0.3",
+    "express": "^4.17.1",
+    "express-art-template": "^1.0.1",
+    "express-session": "^1.17.0",
+    "formidable": "^1.2.1",
+    "joi": "^14.3.1",
+    "mongoose": "^5.9.1",
+    "mongoose-sex-page": "^1.2.4",
+    "morgan": "^1.9.1"
+  }
+}
